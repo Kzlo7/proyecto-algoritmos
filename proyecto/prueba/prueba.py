@@ -15,6 +15,7 @@ xx=[]
 
 
 for j in asd1:
+    j = j
     xx.append(j)
 
 xx.pop(0)
