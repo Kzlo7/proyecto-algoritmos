@@ -115,8 +115,8 @@ def uno():
         f3=Label(v3)
         n = tk.StringVar()
         n2 = tk.StringVar()
-        list = ttk.Combobox(v3, textvariable = n)
-        list1 = ttk.Combobox(v3, textvariable = n2)
+        list = ttk.Combobox(v3,state="readonly", textvariable = n)
+        list1 = ttk.Combobox(v3,state="readonly", textvariable = n2)
         list1["values"]=(xx)
         list['values'] = (xx)
         def klk(xx):
@@ -155,7 +155,7 @@ def dos():
         v3.geometry("392x568")
         v3.title("Traslado 1:3")
         n = tk.StringVar()
-        list = ttk.Combobox(v3, textvariable = n)
+        list = ttk.Combobox(v3,state="readonly", textvariable = n)
         list["values"]=(xx)
         list.grid(column=1,row=1)
         def unotres(u):
