@@ -1,10 +1,12 @@
-from os import fdopen, path
+from os import dup2, fdopen, path
 import tkinter
 from tkinter.constants import CENTER, COMMAND, Y
+from typing import Text
 from numpy.lib.shape_base import tile
 import pandas as pd
 import tkinter as tk
 from tkinter import Grid, Image, Label, Misc, PhotoImage, ttk
+import operator
 
 
 l1=pd.read_excel("kk.xlsx")
@@ -58,15 +60,25 @@ def dij(graf, src,op2):
                 if (dist[u] + graf[u][i]<dist[i]):
                     dist[i]=dist[u]+graf[u][i]
                     punt[i]=u
+        
+    
     ll=[]
+    p=[]
+    c1=[]
+   
     def mostrarcamino(punt,j,xx):
         if(punt[j]==-1):
             ll.append(xx[j])
             return
         mostrarcamino(punt,punt[j],xx)
         ll.append(xx[j])
+        
     mostrarcamino(punt,op2,xx)
-    return ll
+    ñ9=round(dist[op2],2)
+    p.append(ñ9)
+    c1.append(ll)
+    c1.append(p)
+    return c1
 #######################################################
 # Creating tkinter window
 window = tk.Tk()
@@ -79,10 +91,10 @@ ttk.Label(window, text = "MHB Shortest Jobs SpA",
           font = ("Times New Roman", 15)).grid(row = 0, column = 1)
 img=tk.PhotoImage(file="metro.png") 
 # label
-t1=ttk.Label(window, text = "Selecciona la estacion de inicio :",
+t1=ttk.Label(window, text = "Selecciona la tienda de inicio :",
           font = ("Times New Roman", 10))#.grid(column = 1,
           #row = 5, padx = 10, pady = 25,columnspan=1)
-t2=ttk.Label(window, text = "Selecciona la estacion de destino :",
+t2=ttk.Label(window, text = "Selecciona la tienda de destino :",
           font = ("Times New Roman", 10))#.grid(column = 1,
           #row = 6, padx = 10, pady = 25)
 m1=Label(window,image=img,).grid(column = 1,row = 1)
@@ -117,8 +129,8 @@ f2.grid(column=1,row=8)
 f3.grid(column=1,row=9)
 def fff():
     mm=dij(grafo,klk(xx),klk1(xx))
-    f2["text"]="la ruta mas corta es: "+str(mm)
-    f3["text"]="La cantidad de estaciones es: "+str(len(mm))
+    f2["text"]="las tiendas visitadas fueron: "+str(mm[0])
+    f3["text"]="La distancia minima fue de: "+str(mm[1])+"KM"
 #list.bind("<<ComboboxSelected>>",lambda _ : fff()) and list1.bind("<<ComboboxSelected>>",lambda _ : fff())
 
 # Adding combobox drop down list
@@ -131,4 +143,52 @@ b1.grid(column=1,row=7)
 
 list.current()
 
+
 window.mainloop()
+def unotres(u):
+    v=0
+    for i in range(0,len(xx)):
+        if(u==xx[i]):
+            v=i
+    return grafo[v]
+def tresp(ini):
+    dic={}
+    for i in range(0,len(ini)):
+        dic[i]=ini[i]
+    
+    dicor = sorted(dic.items(), key=operator.itemgetter(1))
+    m1=dicor[1]
+    m2=dicor[2]
+    m3=dicor[3]
+    return m1,m2,m3
+
+def p2(u):
+    ini=unotres(u)
+    cer=tresp(ini)
+    print("Las estaciones mas cernas son:")
+    cn=1
+   
+    for i in cer:
+        print(str(cn)+".-"+str(xx[i[0]])+" Con una distancia de: "+str(i[1])+"KM")
+        cn=cn+1
+    op=int(input("Cual opcion desea tomar: "))
+    if(op==1):
+        return p2(xx[cer[op-1][0]])
+        print("===============================")
+    elif(op==2):
+        return p2(xx[cer[op-1][0]])
+        print("===============================")
+    elif(op==3):
+        return p2(xx[cer[op-1][0]])
+        print("===============================")
+    else:
+        print("xxx")
+        print("===============================")
+    
+print(p2("einstein"))
+                   
+    
+window.mainloop()
+
+#############################
+
