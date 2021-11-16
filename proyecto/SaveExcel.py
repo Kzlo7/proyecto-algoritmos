@@ -2,15 +2,16 @@ import xlwt
 import xlrd
 
 def Grafo(origen,destino,distancia):
-    documento = xlwt.Workbook(encoding="uft-8")
-    sheet = documento.add_sheet("Distancia",cell_overwrite_ok=True)
+    documento = xlwt.Workbook(encoding="uft-8")#se lee el doc
+    sheet = documento.add_sheet("Distancia",cell_overwrite_ok=True)#se toma la hija distancia para escribir
     style = xlwt.XFStyle()
-    libro = xlrd.open_workbook("Grafo.xls")
-    sh = libro.sheet_by_name("Distancia")
+    
+    libro = xlrd.open_workbook("Grafo.xls")#se abre el excel para leer
+    sh = libro.sheet_by_name("Distancia")#se toma la hoja distancia para leer
     nrows = sh.nrows#largo filas
     ncols = sh.ncols#largo columna
-    vertice = []
-    grafo = []
+    vertice = []#este para las filas
+    grafo = []#este es el grafo
 
     if nrows==0 and ncols==0:#si el largo de la fila y columna es 0
         if origen==destino:#en el caso  que el origen y el destino sean iguales
@@ -18,7 +19,7 @@ def Grafo(origen,destino,distancia):
             sheet.write(nrows+1,nrows,origen)#columna
             sheet.write(nrows,nrows+1,destino)#Fila
             sheet.write(nrows+1,nrows+1,distancia)#Agrega la distancia
-            documento.save("Grafo.xls")
+            documento.save("Grafo.xls")#se guarda
             
     else:
         
@@ -29,6 +30,7 @@ def Grafo(origen,destino,distancia):
                     vertice.remove("")#esta se borra 
             grafo.append(vertice)#Toma la lista vertice y lo agrega al grafo 
             vertice = []#Se resetea el vertice para agrega los siguentes
+            print(grafo)
 
         n = 0
         seguir = True
